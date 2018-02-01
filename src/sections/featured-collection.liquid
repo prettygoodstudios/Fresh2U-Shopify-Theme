@@ -1,0 +1,98 @@
+{% if section.settings.title != blank %}
+  <center><h1>{{ section.settings.title | escape }}</h1></center>
+{% endif %}
+
+{%- assign collection = collections[section.settings.collection] -%}
+<div class="container">
+<div class="row">
+  {% for product in collection.products limit: 6 %}
+    <div class="four columns card">
+      {% if product.featured_image != blank %}
+        <div class="img-holder">{{ product.featured_image.src | img_url: '480x480' | img_tag: product.title }}</div>
+      {% endif %}
+
+      <p>{{ product.title }}</p>
+      <p>
+        {% if product.compare_at_price > product.price %}
+
+          {% if product.price_varies %}
+            {%- assign sale_price = product.price | money -%}
+            {{ 'products.product.on_sale_from_html' | t: price: sale_price }}
+          {% else %}
+            {{ 'products.product.on_sale' | t }}
+            {{ product.price | money }}
+          {% endif %}
+
+        {% else %}
+
+          {% if product.price_varies %}
+            {%- assign price = product.price | money -%}
+            {{ 'products.product.from_text_html' | t: price: price }}
+          {% else %}
+            {{ product.price | money }}
+          {% endif %}
+
+        {% endif %}
+      </p>
+      <div class="card-review">
+        <div class="yotpo bottomLine"
+          data-appkey="fbmH9DfgEkBOedaUXJPqVXkjETHSVPEnANuHcFc9"
+          data-domain="{{shop.permanent_domain | escape }}"
+          data-product-id="{{ product.id }}"
+          data-product-models="{{ product.id }}"
+          data-name="{{ product.title | escape }}"
+          data-url="{{ shop.url }}{{ product.url }}"
+          data-image-url="{{ product.featured_image | product_img_url: 'large' |replace: '?', '%3F' | replace: '&','%26'}}"
+          data-description="{{ product.description | escape }}"
+          data-bread-crumbs="{% for tag in product.tags %}{{ tag | escape }};{% endfor %}">
+        </div>
+      </div>
+      <a href="{{ product.url | within: collection }}" class="more-info-button">More Info</a>
+    </div>
+    {% else %}
+
+      {% for i in (1..6) %}
+        <div class="four columns card">
+          <center>
+            <a href="#">
+              {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+              {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg placeholder-svg--small' }}
+
+              <p>
+                {{ 'homepage.onboarding.product_title' | t }}
+              </p>
+            </a>
+          </center>
+          <p>{{ 1999 | money }}</p>
+          <a href="" class="more-info-button">More Info</a>
+        </div>
+      {% endfor %}
+    {% endfor %}
+</div>
+</div>
+</center>
+{% schema %}
+  {
+    "name": "Featured collection",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Featured collection"
+      },
+      {
+        "id": "collection",
+        "type": "collection",
+        "label": "Collection"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Featured collection",
+        "category": "Collection"
+      }
+    ]
+  }
+
+{% endschema %}

@@ -1,0 +1,77 @@
+.card{
+  background-color: #F2F1EF;
+  margin-bottom: 20px;
+  text-align: center;
+  overflow: hidden;
+}
+.card a{
+  margin-left: 0px !important;
+  color: black;
+  text-decoration: none;
+}
+.card:nth-child(3n+4) {
+  margin-left: 0px !important;
+}
+.img-holder{
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  background: #1AB07A;
+  position: relative;
+}
+.img-holder-2{
+  width: 100%;
+  overflow: hidden;
+  background: #1AB07A;
+  position: relative;
+}
+.img-holder-2:hover{
+  background: #32C47E !important;
+}
+.img-holder-2 p{
+  position: absolute;
+  left: 20px;
+  font-size: 2.0em;
+  color: white;
+}
+.card img{
+  min-width: 100%;
+  min-height: 100%;
+}
+.card p{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.card-row{
+
+}
+.card-review{
+  height: 39px;
+}
+@media only screen and (max-width: 800px){
+  .img-holder-2 img{
+    margin-top: 20px;
+  }
+  .img-holder-2 p{
+    left: 15px;
+    font-size: 1.5em;
+  }
+  .img-holder{
+    height: 200px !important;
+  }
+  .img-holder img{
+    max-height: 150%;
+    max-width: 150%;
+  }
+}
+@media only screen and (max-width: 500px){
+  .img-holder{
+    height: 300px !important;
+  }
+}
+@media only screen and (min-width: 1800px){
+  .img-holder{
+    height: 500px !important;
+  }
+}

@@ -1,0 +1,20 @@
+<img src="{{ section.settings.about-banner-desktop.src | img_url: '1024x614' }}" class="about-banner-sm"  width="100%">
+<img src="{{ section.settings.about-banner-desktop-xl.src | img_url: '3072x1228' }}" class="about-banner-xl" width="100%">
+{% schema %}
+  {
+    "name": "About Banner",
+    "settings": [
+      {
+       "type": "image_picker",
+       "id": "about-banner-desktop",
+       "label": "Desktop About Banner"
+     },
+     {
+      "type": "image_picker",
+      "id": "about-banner-desktop-xl",
+      "label": "Desktop About Banner XL"
+     }
+    ]
+  }
+
+{% endschema %}

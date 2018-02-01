@@ -1,0 +1,187 @@
+<div class="container">
+{% if cart.item_count > 0 %}
+  <h1 class="">{{ 'cart.general.title' | t }}</h1>
+
+  <form action="/cart" method="post" id="cart-form" novalidate>
+    <table class="u-full-width">
+      <thead class="">
+        <tr>
+          <th colspan="2" class="small--hide">{{ 'cart.label.product' | t }}</th>
+          <th colspan="1" class="medium--hide large--hide medium-up--hide">{{ 'cart.label.product' | t }}</th>
+          <th class="small--hide">{{ 'cart.label.price' | t }}</th>
+          <th>{{ 'cart.label.quantity' | t }}</th>
+          <th>{{ 'cart.label.total' | t }}</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for item in cart.items %}
+
+        {% comment %}
+
+        Cart Item Template
+        =====================
+        The data-label attributes on <td> elements are mobile-friendly
+        helpers used for responsive-table labels
+        {% endcomment %}
+
+          <tr class="">
+
+            <td data-label="{{ 'customer.order.product' | t }}" colspan="2" class="cart-item small--hide">
+              <div class="cart-image">
+                {% if item.image != blank %}
+                  <a href="{{ item.url | within: collections.all }}" class="small--hide">
+                    {{ item | img_url: '100x100' | img_tag: item.title }}
+                  </a>
+                {% endif %}
+              </div>
+              <a href="{{ item.url }}">{{ item.product.title }}</a>
+
+              {% unless item.product.has_only_default_variant %}
+                <p>{{ item.variant.title }}</p>
+              {% endunless %}
+
+              <p>{{ item.vendor }}</p>
+
+              {%- assign property_size = item.properties | size -%}
+
+              {% if property_size > 0 %}
+                {% for p in item.properties %}
+                  {% unless p.last == blank %}
+                  {{ p.first }}:
+
+                  {% if p.last contains '/uploads/' %}
+                    <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+                  {% else %}
+                    {{ p.last }}
+                  {% endif %}
+
+                  {% endunless %}
+                {% endfor %}
+              {% endif %}
+
+              <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0">
+                <small>{{ 'cart.general.remove' | t }}</small>
+              </a>
+            </td>
+            <td data-label="{{ 'customer.order.product' | t }}" colspan="1" class="cart-item large--hide medium--hide medium-up--hide">
+              <div class="cart-image">
+                {% if item.image != blank %}
+                  <a href="{{ item.url | within: collections.all }}" class="small--hide">
+                    {{ item | img_url: '100x100' | img_tag: item.title }}
+                  </a>
+                {% endif %}
+              </div>
+              <a href="{{ item.url }}">{{ item.product.title }}</a>
+
+              {% unless item.product.has_only_default_variant %}
+                <p>{{ item.variant.title }}</p>
+              {% endunless %}
+
+              <p>{{ item.vendor }}</p>
+
+              {%- assign property_size = item.properties | size -%}
+
+              {% if property_size > 0 %}
+                {% for p in item.properties %}
+                  {% unless p.last == blank %}
+                  {{ p.first }}:
+
+                  {% if p.last contains '/uploads/' %}
+                    <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+                  {% else %}
+                    {{ p.last }}
+                  {% endif %}
+
+                  {% endunless %}
+                {% endfor %}
+              {% endif %}
+
+              <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0">
+                <small>{{ 'cart.general.remove' | t }}</small>
+              </a>
+            </td>
+            <td data-label="{{ 'cart.label.price' | t }}" class="small--hide">
+              {% if item.original_line_price != item.line_price %}
+                <span class="visually-hidden">{{ 'cart.label.discounted_price' | t }}</span>
+                {{ item.price | money }}
+                <span class="visually-hidden">{{ 'cart.label.original_price' | t }}</span>
+                <s>{{ item.original_price | money }}</s>
+              {% else %}
+                {{ item.price | money }}
+              {% endif %}
+            </td>
+            <td data-label="{{ 'cart.label.quantity' | t }}">
+              <div class="quantity">
+                <input type="number"
+                       name="updates[]"
+                       id="updates_{{ item.key }}"
+                       value="{{ item.quantity }}"
+                       min="0"
+                       >
+              </div>
+            </td>
+            <td data-label="{{ 'cart.label.total' | t }}">
+              {{ item.line_price | money }}
+            </td>
+          </tr>
+        {% endfor %}
+        <tr>
+          <td colspan="4" class="small--hide">
+            <p>{{ 'cart.general.subtotal' | t }}</p>
+          </td>
+          <td colspan="2" class="large--hide medium-up--hide medium--hide">
+            <p>{{ 'cart.general.subtotal' | t }}</p>
+          </td>
+          <td>
+            <p>{{ cart.total_price | money }}</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    {% if settings.cart_notes_enable %}
+      <label for="CartSpecialInstructions">{{ 'cart.general.note' | t }}</label>
+      <textarea name="note" id="CartSpecialInstructions">{{ cart.note }}</textarea>
+    {% endif %}
+    {% if cart.total_discounts > 0 %}
+      <p>{{ 'cart.general.savings' | t }} {{ cart.total_discounts | money }}</p>
+    {% endif %}
+    <p>Zip Code (This is to insure you live within our delivey area. Our delivery area consists of the municipalities of Orem, Provo, Vineyard, Lindon, and Pleasant Grove, Utah.)
+      <textarea name="zip" id="zip" cols="7" rows="1" placeholder="Zip Code"></textarea>
+    </p>
+    <p>{{ 'cart.general.shipping_at_checkout' | t }}</p>
+    <input type="submit" name="update" value="{{ 'cart.general.update' | t }}" class="standard-button">
+    {% if cart.total_price >= 1000 %}
+    <div id="finish-check-out">
+      <p>OR</p>
+      <input type="submit" name="checkout" class="standard-button" value="{{ 'cart.general.checkout' | t }}">
+    </div>
+    {% else %}
+      <p>You must order $10.00 or more worth of products to check out.</p>
+    {% endif %}
+    <p id="please-update" style="display:none;">You must update the cart to checkout.</p>
+  </form>
+{% else %}
+  <h1>{{ 'cart.general.title' | t }}</h1>
+
+  {% comment %}
+  Cart empty state
+  {% endcomment %}
+  <div class="supports-cookies">
+    <p>{{ 'cart.general.empty' | t }}</p>
+    <p>{{ 'cart.general.continue_browsing_html' | t }}</p>
+  </div>
+
+  {% comment %}
+  Cart no cookies state
+  ---------------------
+  Browser cookies are required to use the cart. If cookies aren't enabled in the
+  browser a message is displayed prompting the user to enable them.
+  {% endcomment %}
+  <div class="supports-no-cookies">
+    <p>{{ 'cart.general.cookies_required' | t }}</p>
+  </div>
+{% endif %}
+</div>
+<br>

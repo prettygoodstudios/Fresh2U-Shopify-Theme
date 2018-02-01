@@ -1,0 +1,38 @@
+<div class="container">
+  <center><h1>{{ section.settings.call-to-action}}</h1></center>
+  <center><p>{{ section.settings.description}}</p></center>
+  <center><a href="{{section.settings.url}}" class="standard-button" style="max-width:300px;">{{section.settings.button-content}}</a></center>
+</div>
+<br/>
+{% schema %}
+  {
+    "name": "Membership",
+    "settings": [
+      {
+        "type": "text",
+        "id": "call-to-action",
+        "label": "Call To Action",
+        "default": "lorem"
+      },
+      {
+        "type": "text",
+        "id": "description",
+        "label": "Description",
+        "default": "Lorem Ipsum."
+      },
+      {
+        "type": "text",
+        "id": "url",
+        "label": "URL",
+        "default": "google.com"
+      },
+      {
+        "type": "text",
+        "id": "button-content",
+        "label": "Button Content",
+        "default": "google.com"
+      }
+    ]
+  }
+
+{% endschema %}

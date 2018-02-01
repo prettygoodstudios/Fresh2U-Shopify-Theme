@@ -1,0 +1,99 @@
+<center><h1 class="about-team-title">Our Team</h1></center>
+<div class="about-team grid">
+  <div class="grid__item medium-up--one-third small--one team-block">
+    <center><img src="{{ section.settings.profile-1.src | img_url: 'large' }}" alt="Profile" class="about-profile"></center>
+    <center><h3 class="team-name">{{section.settings.name-1}}</h3></center>
+    <center><h4 class="team-role">{{section.settings.role-1}}</h4></center>
+    <p class="team-description">{{section.settings.description-1}}</p>
+  </div>
+  <div class="grid__item medium-up--one-third small--one team-block">
+    <center><img src="{{ section.settings.profile-2.src | img_url: 'large' }}" alt="Profile" class="about-profile"></center>
+    <center><h3 class="team-name">{{section.settings.name-2}}</h3></center>
+    <center><h4 class="team-role">{{section.settings.role-2}}</h4></center>
+    <p class="team-description">{{section.settings.description-2}}</p>
+  </div>
+  <div class="grid__item medium-up--one-third small--one team-block">
+    <center><img src="{{ section.settings.profile-3.src | img_url: 'large' }}" alt="Profile" class="about-profile"></center>
+    <center><h3 class="team-name">{{section.settings.name-3}}</h3></center>
+    <center><h4 class="team-role">{{section.settings.role-3}}</h4></center>
+    <p class="team-description">{{section.settings.description-3}}</p>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Team",
+    "settings": [
+      {
+        "type": "text",
+        "id": "name-1",
+        "label": "Team Member 1",
+        "default": "lorem"
+      },
+      {
+        "type": "text",
+        "id": "role-1",
+        "label": "Team Member 1 Role",
+        "default": "Lorem Ipsum."
+      },
+      {
+        "type": "text",
+        "id": "description-1",
+        "label": "Team Member 1 Description",
+        "default": "Lorem Ipsum."
+      }
+      ,
+      {
+       "type": "image_picker",
+       "id": "profile-1",
+       "label": "Team Member 1 Profile Image"
+     },{
+       "type": "text",
+       "id": "name-2",
+       "label": "Team Member 2",
+       "default": "lorem"
+     },
+     {
+       "type": "text",
+       "id": "role-2",
+       "label": "Team Member 2 Role",
+       "default": "Lorem Ipsum."
+     },
+     {
+       "type": "text",
+       "id": "description-2",
+       "label": "Team Member 2 Description",
+       "default": "Lorem Ipsum."
+     }
+     ,
+     {
+      "type": "image_picker",
+      "id": "profile-2",
+      "label": "Team Member 2 Profile Image"
+    },{
+      "type": "text",
+      "id": "name-3",
+      "label": "Team Member 3",
+      "default": "lorem"
+    },
+    {
+      "type": "text",
+      "id": "description-3",
+      "label": "Team Member 3 Description",
+      "default": "Lorem Ipsum."
+    }
+    ,
+    {
+      "type": "text",
+      "id": "role-3",
+      "label": "Team Member 3 Role",
+      "default": "Lorem Ipsum."
+    },
+    {
+     "type": "image_picker",
+     "id": "profile-3",
+     "label": "Team Member 3 Profile Image"
+   }
+    ]
+  }
+
+{% endschema %}

@@ -1,0 +1,90 @@
+<div class="container">
+  {% if collection.title == 'Products'  %}
+    <br>
+    <div class="row">
+      {% for collection in collections %}
+        <a href="{% if collection == empty %}#{% else %}{{ collection.url }}{% endif %}" class="four columns card collection-card">
+          <center>
+            <div class="img-holder-2">
+              <p>
+                {% if collection == empty %}
+                  {{ 'homepage.onboarding.collection_title' | t }}
+                {% else %}
+                  {{ collection.title }}
+                {% endif %}
+              </p>
+              {% if collection.image != blank %}
+                {{ collection | img_url: '480x480' | img_tag: collection.title }}
+              {% elsif collection.products.first != blank %}
+                {{ collection.products.first | img_url: '480x480' | img_tag: collection.title }}
+              {% elsif collection == empty %}
+                {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+                {{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg placeholder-svg--small' }}
+              {% endif %}
+            </div>
+          </center>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <center><h1>{{collection.title}}</h1></center>
+    <div class="row card-row">
+    {% for product in collection.products %}
+        <div class="four columns card {% for cat in product.collections %} {{cat.title | downcase}} {% endfor %}">
+          {% if product.featured_image != blank %}
+            <div class="img-holder">{{ product.featured_image.src | img_url: '480x480' | img_tag: product.featured_image.alt }}</div>
+          {% endif %}
+
+          <p class="">
+            {{ product.title }}
+          </p>
+          <p>
+            {% if product.compare_at_price > product.price %}
+
+              {% if product.price_varies %}
+                {%- assign sale_price = product.price | money -%}
+                {{ 'products.product.on_sale_from_html' | t: price: sale_price }}
+              {% else %}
+                {{ 'products.product.on_sale' | t }}
+                <span class="card__price-sale">{{ product.price | money }}</span>
+              {% endif %}
+
+            {% else %}
+
+              {% if product.price_varies %}
+                {%- assign price = product.price | money -%}
+                {{ 'products.product.from_text_html' | t: price: price }}
+              {% else %}
+                {{ product.price | money }}
+              {% endif %}
+
+            {% endif %}
+
+            {% if product.compare_at_price > product.price %}
+              <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+              <s>{{ product.compare_at_price | money }}</s>
+            {% endif %}
+
+            {% unless product.available %}
+              {{ 'products.product.sold_out' | t }}
+            {% endunless %}
+          </p>
+          <div class="card-review">
+            <div class="yotpo bottomLine"
+              data-appkey="fbmH9DfgEkBOedaUXJPqVXkjETHSVPEnANuHcFc9"
+              data-domain="{{shop.permanent_domain | escape }}"
+              data-product-id="{{ product.id }}"
+              data-product-models="{{ product.id }}"
+              data-name="{{ product.title | escape }}"
+              data-url="{{ shop.url }}{{ product.url }}"
+              data-image-url="{{ product.featured_image | product_img_url: 'large' |replace: '?', '%3F' | replace: '&','%26'}}"
+              data-description="{{ product.description | escape }}"
+              data-bread-crumbs="{% for tag in product.tags %}{{ tag | escape }};{% endfor %}">
+            </div>
+          </div>
+          <a href="{{ product.url | within: collection }}" class="more-info-button">More Info</a>
+        </div>
+    {% endfor %}
+  {% endif %}
+</div>
+</div>

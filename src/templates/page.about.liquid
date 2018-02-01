@@ -1,0 +1,12 @@
+<!--
+<div class="about-banner grid">
+  <h1 class="about-title">{{ page.title }}</h1>
+</div>
+-->
+{% section "about-banner" %}
+<div class="container about-content">
+  {{ page.content }}
+</div>
+<div class="about-body">
+  {% section 'team' %}
+</div>

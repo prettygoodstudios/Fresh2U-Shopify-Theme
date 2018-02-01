@@ -1,0 +1,83 @@
+<div class="landing">
+  <div class="call-to-action banner-desktop" style="">
+    <image src="{{ section.settings.banner.src | img_url: '2048x1024' }}" />
+    <div class="call-content">
+      <h1>A Farmer's Market At Your Doorstep!</h1>
+      <center><a href="collections/all" class="btn-call">Shop Now</a></center>
+    </div>
+    <!--
+    <img src="{{ section.settings.banner.src | img_url: '2048x1024' }}" alt="Banner" class="banner-desktop">
+    <img src="{{ section.settings.banner-mobile | img_url: '1024x2048' }}" alt="Banner Mobile" class="banner-mobile">
+    -->
+  </div>
+  <div class="call-to-action banner-xl" style="">
+    <image src="{{ section.settings.banner-xl | img_url: '1800x4060' }}" />
+    <div class="call-content">
+      <h1>A Farmer's Market At Your Doorstep!</h1>
+      <center><a href="collections/all" class="btn-call">Shop Now</a></center>
+    </div>
+    <!--
+    <img src="{{ section.settings.banner.src | img_url: '2048x1024' }}" alt="Banner" class="banner-desktop">
+    <img src="{{ section.settings.banner-mobile | img_url: '1024x2048' }}" alt="Banner Mobile" class="banner-mobile">
+    -->
+  </div>
+  <div class="call-to-action banner-mobile">
+    <image src="{{ section.settings.banner-mobile | img_url: '1024x2048' }}" />
+    <div class="call-content">
+      <h1>A Farmer's Market At Your Doorstep!</h1>
+      <center><a href="#" class="btn-call">Shop Now</a></center>
+    </div>
+    <!--
+    <img src="{{ section.settings.banner.src | img_url: '2048x1024' }}" alt="Banner" class="banner-desktop">
+    <img src="{{ section.settings.banner-mobile | img_url: '1024x2048' }}" alt="Banner Mobile" class="banner-mobile">
+    -->
+  </div>
+  <div class="landing-info container">
+    <img src="{{ section.settings.deliveryMap | img_url: '1024x1254' }}" alt="Delivery Map" class="deliveryMap">
+    <p class="landing-paragraph">{{section.settings.description}}</p>
+  </div>
+</div>
+<br>
+{% schema %}
+  {
+    "name": "Landing",
+    "settings": [
+      {
+        "type": "text",
+        "id": "description",
+        "label": "Welcome Paragraph",
+        "default": "Lorem Ipsum."
+      },{
+        "type": "text",
+        "id": "newsletterTitle",
+        "label": "Newsletter Title",
+        "default": "Lorem Ipsum."
+      },{
+        "type": "text",
+        "id": "newsletterDescription",
+        "label": "Newsletter Description",
+        "default": "Lorem Ipsum."
+      },
+      {
+       "type": "image_picker",
+       "id": "deliveryMap",
+       "label": "Delivery Area Map"
+     },{
+       "type": "image_picker",
+       "id": "banner",
+       "label": "Banner Image"
+     },
+     {
+       "type": "image_picker",
+       "id": "banner-mobile",
+       "label": "Mobile Banner Image"
+     },
+     {
+       "type": "image_picker",
+       "id": "banner-xl",
+       "label": "XL Banner Image"
+     }
+    ]
+  }
+
+{% endschema %}
