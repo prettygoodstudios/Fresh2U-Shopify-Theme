@@ -62,7 +62,6 @@ var loadScript = function(url, callback){
   } else {
     myAppJavaScript(jQuery);
   }
-
 };
 var show = false;
 var myAppJavaScript = function($){

@@ -34,55 +34,62 @@
           {% if product.featured_image != blank %}
             <div class="img-holder">{{ product.featured_image.src | img_url: '480x480' | img_tag: product.featured_image.alt }}</div>
           {% endif %}
+          <div class="card-info">
+            <div class="card-title">
+              {{ product.title }}
+            </div>
+            <div class="card-price">
+              {% if product.compare_at_price > product.price %}
 
-          <p class="">
-            {{ product.title }}
-          </p>
-          <p>
-            {% if product.compare_at_price > product.price %}
+                {% if product.price_varies %}
+                  {%- assign sale_price = product.price | money -%}
+                  {{ 'products.product.on_sale_from_html' | t: price: sale_price }}
+                {% else %}
+                  {{ 'products.product.on_sale' | t }}
+                  <span class="card__price-sale">{{ product.price | money }}</span>
+                {% endif %}
 
-              {% if product.price_varies %}
-                {%- assign sale_price = product.price | money -%}
-                {{ 'products.product.on_sale_from_html' | t: price: sale_price }}
               {% else %}
-                {{ 'products.product.on_sale' | t }}
-                <span class="card__price-sale">{{ product.price | money }}</span>
+
+                {% if product.price_varies %}
+                  {%- assign price = product.price | money -%}
+                  {{ 'products.product.from_text_html' | t: price: price }}
+                {% else %}
+                  {{ product.price | money }}
+                {% endif %}
+
               {% endif %}
 
-            {% else %}
-
-              {% if product.price_varies %}
-                {%- assign price = product.price | money -%}
-                {{ 'products.product.from_text_html' | t: price: price }}
-              {% else %}
-                {{ product.price | money }}
+              {% if product.compare_at_price > product.price %}
+                <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+                <s>{{ product.compare_at_price | money }}</s>
               {% endif %}
 
-            {% endif %}
-
-            {% if product.compare_at_price > product.price %}
-              <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
-              <s>{{ product.compare_at_price | money }}</s>
-            {% endif %}
-
-            {% unless product.available %}
-              {{ 'products.product.sold_out' | t }}
-            {% endunless %}
-          </p>
-          <div class="card-review">
-            <div class="yotpo bottomLine"
-              data-appkey="fbmH9DfgEkBOedaUXJPqVXkjETHSVPEnANuHcFc9"
-              data-domain="{{shop.permanent_domain | escape }}"
-              data-product-id="{{ product.id }}"
-              data-product-models="{{ product.id }}"
-              data-name="{{ product.title | escape }}"
-              data-url="{{ shop.url }}{{ product.url }}"
-              data-image-url="{{ product.featured_image | product_img_url: 'large' |replace: '?', '%3F' | replace: '&','%26'}}"
-              data-description="{{ product.description | escape }}"
-              data-bread-crumbs="{% for tag in product.tags %}{{ tag | escape }};{% endfor %}">
+              {% unless product.available %}
+                {{ 'products.product.sold_out' | t }}
+              {% endunless %}
+            </div>
+            <div class="card-review">
+              <div class="yotpo bottomLine"
+                data-appkey="fbmH9DfgEkBOedaUXJPqVXkjETHSVPEnANuHcFc9"
+                data-domain="{{shop.permanent_domain | escape }}"
+                data-product-id="{{ product.id }}"
+                data-product-models="{{ product.id }}"
+                data-name="{{ product.title | escape }}"
+                data-url="{{ shop.url }}{{ product.url }}"
+                data-image-url="{{ product.featured_image | product_img_url: 'large' |replace: '?', '%3F' | replace: '&','%26'}}"
+                data-description="{{ product.description | escape }}"
+                data-bread-crumbs="{% for tag in product.tags %}{{ tag | escape }};{% endfor %}">
+              </div>
             </div>
           </div>
-          <a href="{{ product.url | within: collection }}" class="more-info-button">More Info</a>
+          <div class="card-overlay">
+            <form class="" action="/cart/add" data-productid="{{product.id}}"  method="post">
+              <input type="hidden" name="id" data-productid="{{product.id}}" class="product-select" value="{{ product.variants[0].id }}" data-variant-title="{{ product.variants[0].title }}" />
+              <input type="submit" value="Add To Cart" class="overlay-button" />
+              <a href="{{ product.url | within: collection }}" class="overlay-button">More Info</a>
+            </form>
+          </div>
         </div>
     {% endfor %}
   {% endif %}

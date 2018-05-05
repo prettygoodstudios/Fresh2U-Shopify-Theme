@@ -1,7 +1,7 @@
 /*================ General layout styles ================*/
 body,
 html {
-  height: 100%;
+  position: relative;
   margin: 0;
   position: relative;
   overflow-x: hidden;
@@ -28,11 +28,41 @@ label{
   margin: 0 auto;
 }
 .content{
-  min-height: 100%;
+  min-height: 90vh;
 
   /* Equal to height of footer */
   /* But also accounting for potential margin-bottom of last child */
   margin-bottom: -90px;
+}
+.added-to-cart{
+  position: absolute;
+  left: 50%;
+  top: 200px;
+  background-color: #00B179;
+  color: white !important;
+  padding: 20px;
+  border-radius: 20px;
+  transform: translate(-50%,0);
+  opacity: 0;
+}
+.added-successfully{
+  -webkit-transition: opacity 3s ease-in-out;
+    -moz-transition: opacity 3s ease-in-out;
+    -ms-transition: opacity 3s ease-in-out;
+    -o-transition: opacity 3s ease-in-out;
+     opacity: 1;
+}
+.added-to-cart>h1{
+  color: white !important;
+}
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #00B179;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
 }
 footer,
 .push {
@@ -364,6 +394,58 @@ h2{
   resize: none;
   min-height: 0px;
 }
+.cart-parent{
+  position: fixed;
+  right: 0px;
+  top: 0px;
+  height: 100%;
+  width: 400px;
+  background-color: #32C47E;
+  color: white !important;
+  z-index: 999;
+  padding: 50px;
+  overflow-y: auto;
+  display: none;
+}
+.cart-header>h1{
+  display: inline !important;
+}
+.cart-header>a{
+  display: inline !important;
+}
+.cart-footer h3{
+  color: white !important;
+}
+.cart-item{
+    margin-top: 20px;
+    height: 100px;
+}
+.cart-item h3{
+  color: white !important;
+  display: inline;
+}
+.cart-item p{
+  margin-top: 10px;
+  display: block;
+  font-size: 1.2em;
+  color: white !important;
+}
+.cart-item > .quantity{
+  width: 100px !important;
+  display: block;
+}
+.close-cart{
+  color: white;
+  float: right;
+  font-size: 2.0em;
+  text-decoration: none;
+}
+.close-cart:hover{
+  color: #ECECEC !important;
+}
+.cart-parent h1{
+  color: white !important;
+}
 .cart-image{
   width: 100px;
 }
@@ -373,6 +455,9 @@ h2{
 .select-cat{
   margin-right: 50px;
   font-size: 2.0em;
+}
+.zip-form p{
+  color: white !important;
 }
 .email-form{
   padding: 0px !important;
@@ -477,6 +562,15 @@ input[type=number]
 #Search{
   color: #545454 !important;
   padding: 10px;
+}
+.search-form input{
+  color: #545454 !important;
+  padding: 10px;
+}
+.search-form{
+  margin-top: 20px !important;
+  margin-bottom: 20px !important;
+  width: 100%;
 }
 .quantity-button {
   position: relative;
@@ -642,7 +736,10 @@ a:hover{
     width: 85%;
     padding: 0; }
 }
-
+/* Custom Created by me Tablet Media Query*/
+@media (min-width: 550px) and (max-width: 865px) {
+  .four.columns { width: 48% !important;}
+}
 /* For devices larger than 550px */
 @media (min-width: 550px) {
   .container {

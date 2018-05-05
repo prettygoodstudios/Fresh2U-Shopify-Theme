@@ -101,9 +101,9 @@
           <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
         </button>
       </form>
-      <a href="/cart" class="cart" id="cart">
+      <a href="#" class="cart" id="cart">
         {% include 'icon-cart' %}
-        {{ cart.item_count }} {{ 'layout.cart.items_count' | t: count: cart.item_count }}
+        <span id="cartQty">Cart</span>
       </a>
     </div>
   </header>
